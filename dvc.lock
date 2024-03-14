@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/dataset.csv
+      hash: md5
+      md5: 25165114a9b3189617204d8057c80507
+      size: 195648
+    - path: params.yaml
+      hash: md5
+      md5: c9bec0757bd0c370dd75b287eeb7e53c
+      size: 93
+    - path: src/train.py
+      hash: md5
+      md5: 25445d35007a41b2e1c2f538beade22a
+      size: 1126
+    outs:
+    - path: model/model.pth
+      hash: md5
+      md5: 3f9fa0428e5ab52fee1df86504e696ad
+      size: 2432
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: model/model.pth
+      hash: md5
+      md5: 16063890e24d8cb6d242551b95efe074
+      size: 2432
+    - path: src/evaluate.py
+      hash: md5
+      md5: 8b376eea664558206aace68807826cec
+      size: 634
+    outs:
+    - path: metrics/accuracy.txt
+      hash: md5
+      md5: 18b6d295daaf46e9415735206246b217
+      size: 16
