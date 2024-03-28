@@ -25,7 +25,7 @@ stages:
     deps:
     - path: model/model.pth
       hash: md5
-      md5: 16063890e24d8cb6d242551b95efe074
+      md5: 6086dc6709e6e601e568d6b807c136cf
       size: 2432
     - path: src/evaluate.py
       hash: md5
@@ -34,5 +34,5 @@ stages:
     outs:
     - path: metrics/accuracy.txt
       hash: md5
-      md5: 18b6d295daaf46e9415735206246b217
+      md5: b3412604ca2010dde2c084ca49c26efb
       size: 16

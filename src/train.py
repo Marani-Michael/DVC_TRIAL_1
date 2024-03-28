@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from yaml import safe_load
+import dvclive
 
 with open('params.yaml') as f:
     params = safe_load(f)
@@ -26,11 +27,19 @@ model = SimpleModel()
 criterion = nn.BCELoss()
 optimizer = optim.Adam(model.parameters(), lr=params['train']['lr'])
 
+dvclive.init("dvclive_data", resume=False)
+
 for epoch in range(params['train']['epoch']):
     optimizer.zero_grad()
     outputs = model(torch.tensor(X_train.values, dtype=torch.float))
     loss = criterion(outputs, torch.tensor(y_train.values, dtype=torch.float).view(-1, 1))
     loss.backward()
     optimizer.step()
+    
+    # Log metrics to DVC Live
+    dvclive.log("loss", loss.item())
+    dvclive.next_step()
 
 torch.save(model.state_dict(), params['model']['path'])
+
+dvclive.summary()
